@@ -9,11 +9,37 @@
           color: purple;
           background-color: #d8da3d }
         </style>
+    <script src="./Playground/p5.js/p5.js"></script>
     <title>testing github</title>
 </head>
 <body>
     <h1>this is a test file</h1>
     <p>now testing gitommand line in VSC</p> <br>
-    <p>while scripts are added on another branch, views here. E.g. adding in-page css.</p><br>
+    <p>scripts were added on the scripts branch, views were created in the master branch. E.g. adding in-page css.</p><br>
+
+    <p>now testing cgitommand line in VSC</p>
+    <Script>
+        let giphyAPI = "https://api.giphy.com/v1/gifs/search?api_key=e5rLF4HnliRLVgUVYU8Tm6jHuK28oRoy&q="
+        
+        function setup(){
+            noCanvas();
+            getRainbowGIF()
+            .then(results => {
+                createImg(results.img)
+            })
+            .catch(err =>console.error(err));
+        }
+
+        async function getRainbowGIF(){
+            let response = await fetch(giphyAPI+"rainbow");
+            console.log(response);
+            let json = await response.json();
+            let img_url = await json.data[0].images['fixed_height_small'].url;
+
+            return {
+                img: img_url
+            } 
+        }
+    </Script>
 </body>
 </html>
