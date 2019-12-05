@@ -24,4 +24,13 @@ app.post('/api', (request,response) => {
     // Console.log the request from the client to the server console to check
     console.log('I got a request!');
     console.log(request.body);
+
+    const data = request.body 
+
+    // complete the response
+    response.json({
+        status: 'success',
+        latitude: request.body.lat,
+        longitude: request.body.lon
+    });
 }); 
