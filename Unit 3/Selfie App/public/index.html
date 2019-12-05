@@ -8,18 +8,24 @@
 </head>
 <body>
     <h1>Welcome to the Selfie App</h1>
+    <p>Latitude: <span id="latitude"></span>&deg;</p>
+    <p>Longitude: <span id="longitude"></span>&deg;</p>
 
     <script>
     // test if geolocation is available
         if ("geolocation" in navigator) {
             // geolocation is available
             console.log("geolocation available");
+            navigator.geolocation.getCurrentPosition(position => {
+               const lat = position.coords.latitude;
+               const lon = position.coords.longitude;
+               document.getElementById("latitude").textContent = lat;
+               document.getElementById("longitude").textContent = lon;
+            });
         } else {
             // geolocation IS NOT available
             console.log("geolocation not available");
         }
-
-
     </script>
 </body>
 </html>
