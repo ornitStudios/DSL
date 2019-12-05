@@ -21,6 +21,18 @@
                const lon = position.coords.longitude;
                document.getElementById("latitude").textContent = lat;
                document.getElementById("longitude").textContent = lon;
+
+               const data = {lat,lon};
+               const options ={
+                    // declare the method fetch() will use
+                   method : 'POST',
+                   headers: {
+                    // use the headers to explicit to the server the format of the post   
+                       'Content-Type': 'application/json'},
+                    // prepare the data to be sent as a JSON encoded string
+                   body: JSON.stringify(data)
+               }; 
+               fetch('/api', options)
             });
         } else {
             // geolocation IS NOT available
