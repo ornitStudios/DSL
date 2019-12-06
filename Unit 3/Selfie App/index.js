@@ -4,6 +4,9 @@ const express = require('express');
 // create a web application as an instance of express()
 const app = express();
 
+// use the node filesystem to write to a file
+const fs = require('fs');
+
 // listen! the listen() function takes two arguments
 // 1. a port on which to listen
 // 2. a callback function i.e. what to do when a request arrives through this port
@@ -25,7 +28,12 @@ app.post('/api', (request,response) => {
     console.log('I got a request!');
     console.log(request.body);
 
-    const data = request.body 
+    const data = request.body
+    // stringify the json data
+    // parameter 'null' and '2' format json data
+    json = JSON.stringify(data, null, 2);
+    // write strinified jason data to file
+    fs.appendFile('./data/geolocation_data.json', json, ()=> console.log('wrote to file'));
 
     // complete the response
     response.json({
