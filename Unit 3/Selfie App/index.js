@@ -17,15 +17,21 @@ app.use(express.static('public'));
 // options are passed as argusments e.g. no json file bigger than 1mb
 app.use(express.json({limit: '1mb'}));
 
+// creating an arry to write to
+const database = [];
+
 // create a route to 'api" via the the POST method
 // request has all the http request from the client
 // response is the variable the server will send back to the client
 app.post('/api', (request,response) => {
     // Console.log the request from the client to the server console to check
     console.log('I got a request!');
-    console.log(request.body);
 
-    const data = request.body 
+    const data = request.body
+
+    // pushing data to the array
+    database.push(data);
+    console.log(database);
 
     // complete the response
     response.json({
