@@ -8,6 +8,8 @@
 </head>
 <body>
     <h1>The moods we've tracked...</h1>
+    <div><a href="/">enter</a> | <a href="all.html">list</a></div>
+
     <script>
         getData();
         // fetch asynchronously from /api. Default is GET Method
@@ -20,7 +22,7 @@
             // 2. Instantiate elements
             // iterate through the response
             for (item of data){
-                const root = document.createElement('div');
+                const root = document.createElement('p');
                 const mood = document.createElement('div');
                 const geo = document.createElement('div');
                 const date = document.createElement('div');
