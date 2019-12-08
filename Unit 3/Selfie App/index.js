@@ -25,6 +25,20 @@ const database = new Datastore('./data/database.db');
 // load the database into memory. if it does not exist create the db.
 database.loadDatabase();
 
+app.get('/api', (request,response) => {
+    // find (NeDB syntax) takes two arguments
+    // the critieria to find, as an object (left empty here)
+    // a callback function (itself with two arguments)
+    database.find({},(err, data)=> {
+        // some error handling.
+        if (err) {
+            response.end();
+            return;
+        }
+        response.json(data);
+    });
+});
+
 // create a route to 'api" via the the POST method
 // request has all the http request from the client
 // response is the variable the server will send back to the client
@@ -41,11 +55,5 @@ app.post('/api', (request,response) => {
     database.insert(data);
 
     // complete the response
-    response.json({
-        status: 'success',
-        timestamp: timestamp,
-        mood: request.body.mood,
-        latitude: request.body.lat,
-        longitude: request.body.lon
-    });
+    response.json(data);
 }); 
