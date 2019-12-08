@@ -44,6 +44,7 @@ app.post('/api', (request,response) => {
     response.json({
         status: 'success',
         timestamp: timestamp,
+        mood: request.body.mood,
         latitude: request.body.lat,
         longitude: request.body.lon
     });

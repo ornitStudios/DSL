@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Selfie App</title>
+    <title>Mood tracker</title>
 </head>
 <body>
-    <h1>Welcome to the Selfie App</h1>
+    <h1>Welcome to the Mood tracker App</h1>
     <p>Latitude: <span id="latitude"></span>&deg;</p>
     <p>Longitude: <span id="longitude"></span>&deg;</p>
+    <label for="mood">What is your mood?</label>
+    <input id="mood" value="Pretty happy!" />
     <button id="geolocate">geolocate</button>
 
     <script>
@@ -18,13 +20,14 @@
             if ("geolocation" in navigator) {
                 // geolocation is available
                 console.log("geolocation available");
+                const mood = document.getElementById('mood').value;
                 navigator.geolocation.getCurrentPosition(async position => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
                 document.getElementById("latitude").textContent = lat;
                 document.getElementById("longitude").textContent = lon;
 
-                const data = {lat,lon};
+                const data = {lat,lon, mood};
                 const options ={
                         // declare the method fetch() will use
                     method : 'POST',
