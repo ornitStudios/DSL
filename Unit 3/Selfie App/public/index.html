@@ -36,10 +36,16 @@
                     navigator.geolocation.getCurrentPosition(async position => {
                     const lat = position.coords.latitude;
                     const lon = position.coords.longitude;
+                    // load the pixels of the video onto a canvas
+                    video.loadPixels();
+                    // taking the video's canvas and converting it to base64
+                    const image64 = video.canvas.toDataURL();
+                    
                     document.getElementById("latitude").textContent = lat;
                     document.getElementById("longitude").textContent = lon;
 
-                    const data = {lat,lon,mood};
+
+                    const data = {lat,lon,mood, image64};
                     const options ={
                             // declare the method fetch() will use
                         method : 'POST',
