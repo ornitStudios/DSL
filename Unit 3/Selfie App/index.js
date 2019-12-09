@@ -7,6 +7,9 @@ const app = express();
 // importing nedb
 const Datastore = require('nedb');
 
+// importin filesystem libray
+const fs = require('fs');
+
 // listen! the listen() function takes two arguments
 // 1. a port on which to listen
 // 2. a callback function i.e. what to do when a request arrives through this port
@@ -51,6 +54,21 @@ app.post('/api', (request,response) => {
     const timestamp = Date.now();
     // assign timestamp to data object
     data.timestamp = timestamp;
+    
+    // create filename and path
+    data.filename = timestamp+'.png';
+    data.filepath = 'public/images/';
+    
+    // remove non binary data from base64
+    const base64Data = data.image64.replace(/^data:image\/\w+;base64,/, "");
+    // write file
+    fs.writeFile(data.filepath+data.filename, base64Data, 'base64', error => {
+            console.log(error);
+          });
+        
+    //   remove Image64 from data object as Image now saved as png
+    delete data.image64;
+    
     // pushing data to the array
     database.insert(data);
 
