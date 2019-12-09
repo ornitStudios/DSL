@@ -1,4 +1,4 @@
-        document.getElementById('geolocate').addEventListener('click', event => {
+        document.getElementById('check-in').addEventListener('click', event => {
         // test if geolocation is available
             if ("geolocation" in navigator) {
                 // geolocation is available
