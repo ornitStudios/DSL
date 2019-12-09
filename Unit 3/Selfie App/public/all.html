@@ -35,7 +35,7 @@
                 // converet timestamp to local readable date
                 const dateString = new Date(item.timestamp).toLocaleString();
                 date.textContent = dateString;
-                image.src = item.image64;
+                image.src = '/images/'+item.filename;
 
                 // append to document
                 root.append(mood, geo, date, image);
