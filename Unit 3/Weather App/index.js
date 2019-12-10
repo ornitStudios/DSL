@@ -77,8 +77,20 @@ app.get('/weather/:latlon', async (request,response) => {
     const lat = latlon[0];
     const lon = latlon[1];
     console.log(lat,lon);
-    const api_url = `https://api.darksky.net/forecast/768057eedc7a6f05f57fccdb71fcd058/${lat},${lon}?units=si`;
-    const fetch_response = await fetch(api_url);
-    const json = await fetch_response.json();
-    response.json(json);
+    const weather_url = `https://api.darksky.net/forecast/c73960f14727e00bdecd43c7d45a9f07/${lat},${lon}?units=si`;
+    const weather_response = await fetch(weather_url);
+    const weather_data = await weather_response.json();
+
+    // get air quality from openap (no api key needed)
+    const aq_url = `https://api.openaq.org/v1/latest?coordinates=${lat},${lon}`;
+    const aq_response = await fetch(aq_url);
+    const aq_data = await aq_response.json();
+
+    // compile weather and air quality data into one single object
+    const data = {
+        weather: weather_data,
+        air_quality: aq_data
+    };
+    // send data object comprising weather and air quality data back to the client
+    response.json(data);
 });

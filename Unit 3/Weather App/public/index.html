@@ -13,12 +13,16 @@
     <h1>Welcome to the Weather App</h1>
     <div><a href="/">check in</a> | <a href="/logs">view check-ins</a></div>
 
-    <p>Latitude: <span id="latitude"></span>&deg;</p>
-    <p>Longitude: <span id="longitude"></span>&deg;</p>
-
     <p>
-        The weather here is <span id="summary"></span> with a temperature of <span id="temperature"></span> &deg; Celcius.
+        The weather here
+        at latitude <span id="latitude"></span>&deg; 
+        and longitude <span id="longitude"></span>&deg; 
+        is <span id="summary"></span> 
+        with a temperature of <span id="temperature"></span> &deg; Celcius. <br>
+        The concentration of particle matter (<span id="aq_parameter"></span>) is <span id="aq_value"></span> 
+        <span id="aq_units"></span> last read on <span id="aq_date"></span>.
     </p>
+  
     <button id="checkin">check in</button>
     <br><p></p>
 
