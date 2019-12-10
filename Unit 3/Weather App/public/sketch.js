@@ -1,5 +1,4 @@
         let lat, lon;
-        // document.getElementById('gecheckin').addEventListener('click', event => {
         // test if geolocation is available
         if ("geolocation" in navigator) {
             // geolocation is available
