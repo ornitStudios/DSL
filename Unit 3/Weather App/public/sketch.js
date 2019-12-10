@@ -13,6 +13,9 @@
             const api_url = `weather/${lat},${lon}`;
             const response = await fetch(api_url);
             const json = await response.json();
+            document.getElementById('summary').textContent = json.currently.summary;
+            document.getElementById('temperature').textContent = json.currently.temperature;
+
             console.log(json);
 
             });

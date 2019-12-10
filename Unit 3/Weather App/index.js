@@ -77,7 +77,7 @@ app.get('/weather/:latlon', async (request,response) => {
     const lat = latlon[0];
     const lon = latlon[1];
     console.log(lat,lon);
-    const api_url = `https://api.darksky.net/forecast/0cce75eca5cbef568718809f15f4ef3e/${lat},${lon}`;
+    const api_url = `https://api.darksky.net/forecast/768057eedc7a6f05f57fccdb71fcd058/${lat},${lon}?units=si`;
     const fetch_response = await fetch(api_url);
     const json = await fetch_response.json();
     response.json(json);
