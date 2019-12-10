@@ -7,6 +7,9 @@ const app = express();
 // importing nedb
 const Datastore = require('nedb');
 
+// importing node-fetch (the fetch api is only present by default on the client)
+const fetch = require('node-fetch');
+
 // listen! the listen() function takes two arguments
 // 1. a port on which to listen
 // 2. a callback function i.e. what to do when a request arrives through this port
@@ -58,3 +61,24 @@ app.post('/api', (request,response) => {
     // complete the response
     response.json(data);
 }); 
+
+// SInce CORS are deactivated on Dark Sky, ths is where a proxy request can be made
+// on behalf of the client
+// lat and lon are passed by the client (see /:latlon, Express syntax)
+// the call to Dark Sky is made on behalf of the client
+// the json result from Dark Sky is returned to the client
+
+app.get('/weather/:latlon', async (request,response) => {
+    // request parameters are past through the params property of the request object
+    // They are split into an array on the comma
+    console.log(request.params);
+    const latlon = request.params.latlon.split(',');
+    console.log(latlon);
+    const lat = latlon[0];
+    const lon = latlon[1];
+    console.log(lat,lon);
+    const api_url = `https://api.darksky.net/forecast/0cce75eca5cbef568718809f15f4ef3e/${lat},${lon}`;
+    const fetch_response = await fetch(api_url);
+    const json = await fetch_response.json();
+    response.json(json);
+});
