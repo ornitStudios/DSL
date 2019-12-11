@@ -1,3 +1,6 @@
+// Import dotenv library to be able to use environment variables (for API_KEY)
+require('dotenv').config();
+
 // importing express
 const express = require('express');
 
@@ -71,13 +74,11 @@ app.post('/api', (request,response) => {
 app.get('/weather/:latlon', async (request,response) => {
     // request parameters are past through the params property of the request object
     // They are split into an array on the comma
-    console.log(request.params);
     const latlon = request.params.latlon.split(',');
-    console.log(latlon);
     const lat = latlon[0];
     const lon = latlon[1];
-    console.log(lat,lon);
-    const weather_url = `https://api.darksky.net/forecast/1c8ff6f3448ed5ae4fe159f48e814021/${lat},${lon}?units=si`;
+    const api_key = process.env.API_KEY;
+    const weather_url = `https://api.darksky.net/forecast/${api_key}/${lat},${lon}?units=si`;
     const weather_response = await fetch(weather_url);
     const weather_data = await weather_response.json();
 
