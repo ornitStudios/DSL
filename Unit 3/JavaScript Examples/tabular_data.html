@@ -4,13 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- CDN for the chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <title>Fetch and grab CVS</title>
 </head>
 <body>
+    
+
+
+
+    <!-- canvas to host a chart -->
+    <canvas id="chart" width="800" height="400"></canvas>
     <script>
-        getData();
+
+        chartIt();
+
+        async function chartIt(){
+            const data = await getData();
+        
+            const ctx = document.getElementById('chart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.xs,
+                    datasets: [{
+                        label: 'Rainfall per day - 2019 ',
+                        data: data.ys,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+            });
+        };
+
+
+
+        
         // create an asynch function and fetch the csv
         async function getData(){
+            const xs = [];
+            const ys = [];
+
             const response = await fetch('./data/2019_only.csv');
             // receive the response as text
             const data = await response.text();
@@ -25,9 +60,12 @@
                 // turn each row into an array
                 const cols = row.split(',');
                 const day = cols[2]+cols[3]+cols[4]
+                // push each day to the array of labels for the chart
+                xs.push(day);
                 const rainfall = cols[5];
-                
-            })
+                ys.push(rainfall);
+            });
+            return {xs,ys};
         }
     
     
