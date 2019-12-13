@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fetch and grab CVS</title>
+</head>
+<body>
+    <script>
+        getData();
+        // create an asynch function and fetch the csv
+        async function getData(){
+            const response = await fetch('./data/2019_only.csv');
+            // receive the response as text
+            const data = await response.text();
+
+            // parse the csv
+            // split the csv into table. slice the 0th element off
+            const table = await data.split('\n').slice(1);
+            // iterate over the table and split into fields
+            // this is a bit special as we are iterating using a function 
+            // a for loop would also have been possible
+            table.forEach(row => {
+                // turn each row into an array
+                const cols = row.split(',');
+                const day = cols[2]+cols[3]+cols[4]
+                const rainfall = cols[5];
+                
+            })
+        }
+    
+    
+    </script>
+</body>
+</html>
