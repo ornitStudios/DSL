@@ -28,6 +28,8 @@ function setup(){
     //  w and h are the width and height of a square
     w = width/3;
     h = height/3;
+
+    bestMove();
 }
 
 // function testing the equality of three parameters
@@ -64,6 +66,7 @@ function checkWinner(){
         }
     }
     
+    // count the avaliable spots
     let openSpots = 0;
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
@@ -81,23 +84,44 @@ function checkWinner(){
     }
 }
 
-function nextTurn(){
+function bestMove(){
     // ai to play
     // make all square available at the beginning of the game
-    let available = [];
+    // let available = [];
+
+    // track the score for the best move
+    let bestScore = -Infinity;
+    // track the best move
+    let bestMove;
     for (let i=0; i<3; i++){
         for (let j=0; j<3; j++){
+            // check if the spot available
             if (board[i][j]==''){
-                available.push({i,j});
+                // try that spot
+                board[i][j] = ai;
+                // get the minimax score for this move
+                let score = minimax(board);
+                // undo the move (we're just testing the move, not "playing" for good)
+                board[i][j] = '';
+                // if the score is better than the previosu bestScore
+                // this score becomes the new bestScore
+                // this move becomes the bestMove
+                if (score > bestScore){
+                    bestScore = score;
+                    bestMove = {i,j};
+                }
             }
         }
     }
-    // ai plays randomly
-    let move = random(available);
-    board[move.i][move.j] = ai;
+    // ai plays this move
+    board[bestMove.i][bestMove.j] = ai;
     // human to play
     currentPlayer = human;
-}    
+}
+
+function minimax(board){
+    return 1;
+}
 
 function mousePressed(){
     if (currentPlayer == human){
@@ -114,10 +138,10 @@ function mousePressed(){
             board[i][j] = human;
             // hand over to ai player
             currentPlayer = ai;
-            nextTurn();
+            bestMove();
         }
     };
-};
+}
 
 function draw(){
     background(220);
@@ -166,5 +190,4 @@ function draw(){
         createP(`... And the winner is ... ${result}`).style('font-size', '32px' );
         console.log(result);
     }
-    // nextTurn();
 }
