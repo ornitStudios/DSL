@@ -57,7 +57,7 @@ function checkWinner(){
    // check diagonals
     for (let i = 0 ; i < 3; i++){
     if (equals3(board[0][0],board[1][1],board[2][2])){
-        winner = board[0][2];
+        winner = board[0][0];
         }
     }
     for (let i = 0 ; i < 3; i++){
@@ -92,7 +92,7 @@ function bestMove(){
     // track the score for the best move
     let bestScore = -Infinity;
     // track the best move
-    let bestMove;
+    let move;
     for (let i=0; i<3; i++){
         for (let j=0; j<3; j++){
             // check if the spot available
@@ -100,7 +100,11 @@ function bestMove(){
                 // try that spot
                 board[i][j] = ai;
                 // get the minimax score for this move
-                let score = minimax(board);
+                // passing a board, a depth, and a T/F for isMaximising 
+                // i.e. which player is about to play (the one trying to get the high score
+                // or the one trying to get the low score). In this case, the next to play
+                // is the human 
+                let score = minimax(board, 0, false);
                 // undo the move (we're just testing the move, not "playing" for good)
                 board[i][j] = '';
                 // if the score is better than the previosu bestScore
@@ -108,20 +112,64 @@ function bestMove(){
                 // this move becomes the bestMove
                 if (score > bestScore){
                     bestScore = score;
-                    bestMove = {i,j};
+                    move = {i,j};
                 }
             }
         }
     }
     // ai plays this move
-    board[bestMove.i][bestMove.j] = ai;
+    board[move.i][move.j] = ai;
     // human to play
     currentPlayer = human;
 }
 
-function minimax(board){
-    return 1;
-}
+// score lookup table
+let scores = {
+    X: 1,
+    O: -1,
+    tie: 0
+};
+
+function minimax(board, depth, isMaximising){
+    // first thing to check is if somebody would win with that move 
+    let result = checkWinner();
+    if (result !== null){
+        return scores[result];
+    }
+
+    // if the next player is the maximising player
+    if (isMaximising){
+        let bestScore = -Infinity;
+        for (let i=0; i<3; i++){
+            for (let j=0; j<3; j++){
+                // try all the possible spots again
+                if (board[i][j]==''){
+                    board[i][j] = ai;
+                    let score = minimax(board,depth+1,false);
+                    board[i][j]='';
+                    bestScore = max(score, bestScore);
+                }
+            }
+        }
+        return bestScore;
+         // if the next player is the minimising player
+        } else {
+            let bestScore = Infinity;
+            for (let i=0; i<3; i++){
+                for (let j=0; j<3; j++){
+                    // try all the possible spots again
+                    if (board[i][j]==''){
+                        board[i][j] = human;
+                        let score = minimax(board,depth+1,true);
+                        board[i][j]='';
+                        bestScore = min(score, bestScore);
+                    }
+                }
+            }
+        return bestScore;
+        }
+    }
+
 
 function mousePressed(){
     if (currentPlayer == human){
@@ -131,16 +179,15 @@ function mousePressed(){
         // the value of the parameter.
         let i = floor(mouseX/w);
         let j = floor(mouseY/h);
-        // if the square the click was detected in is avalable
+        // if the square the click was detected is avalable
         if (board[i][j]==''){
-            console.log(`this square is empty`);
             // assign the square to the human i.e. "O"
             board[i][j] = human;
             // hand over to ai player
             currentPlayer = ai;
             bestMove();
         }
-    };
+    }
 }
 
 function draw(){
@@ -178,16 +225,22 @@ function draw(){
                 let xr = w/4;
                 line(x-xr,y-xr, x+xr,y+xr);
                 line(x+xr, y-xr, x-xr, y+xr);
-            };
-        };
-    };
+            }
+        }
+    }
 
     let result = checkWinner();
     // if the result is not null i.e. has been assigned
     if (result != null ){
         // stop the loop
         noLoop();
-        createP(`... And the winner is ... ${result}`).style('font-size', '32px' );
+        let resultP = createP('');
+        resultP.style('font-size', '32px' );
+        if (result == 'tie'){
+            resultP.html('Tie!');
+        } else {
+            resultP.html(`${result} wins!`)
+        }
         console.log(result);
     }
 }
