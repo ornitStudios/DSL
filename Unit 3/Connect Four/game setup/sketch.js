@@ -33,9 +33,7 @@ function setup(){
 
        //  w and h are the width and height of a square
         w = floor(width/7);
-       // console.log("TCL: draw -> w", w)
         h = floor(height/6);
-       // console.log("TCL: draw -> h", h)
 }
 
 // click to play
@@ -53,10 +51,10 @@ function mousePressed(){
         // i.e. assign 'R' to the position on the board and let 
         // draw() draw a red ellipse in that position
         for (let i = 5; i>=0; i--){
-            console.log("TCL: mousePressed -> i", i)
             if (board[i][j] == ''){
-                console.log(i);
                 board[i][j] = human;
+                // once the human has played, check for a winner
+                checkWinner(i,j);
                 i=0;
             }
         }
@@ -67,11 +65,13 @@ function mousePressed(){
         j = floor(random(6));
         
         for (i = 5; i>=0; i--){
-            console.log("TCL: mousePressed -> i", i)
             if (board[i][j] == ''){
-                console.log(i);
                 board[i][j] = ai;
+                checkWinner(i,j);
                 i=0;
+                // once the ai has played, check for a yellow winner from the position just played
+                // pass the position to check winnner
+                
             }
         }
         // ai has played switch back to human
@@ -86,10 +86,41 @@ function nextTurn(){
 function equals4(a,b,c, d){
 }
 
-function checkWinner(){
+function checkWinner(wi,wj){
     let winner = null;
+
+    let Rconnect = 0;
+    let Lconnect  = 0;
+    let i = 0;
+    // check to the right of the coin just played
+    // as long as coins are the same colour
+    // save the number of consecutive coins of the same colour (Rconnect)
+    do { 
+        Rconnect++;
+        i++;
+    }
+    while (board[wi][wj] == board[wi][wj+i]);
     
-    // check rows for a winner
+    i = 0;
+    
+    // check to the left of the coin just played
+    // as long as coins are the same colour
+    // save the number of consecutive coins of the same colour (Lconnect)
+    do { 
+        Lconnect++;
+        i++;
+    }
+    while (board[wi][wj] == board[wi][wj-i]);
+    
+    // once Right and left have been checked add the scores
+    // substract 1 as the coin being played is effectively counted twice
+    // If the score is equal or superior to 4
+    // 4 coins of the same colour have been connected horizontally.
+    // we have a winner!
+    if (Rconnect+Lconnect-1 >= 4){
+        console.log(`${board[wi][wj]} wins`);
+    };
+    
 
    // check columns for a winner
 
@@ -152,6 +183,6 @@ function draw(){
 
 
     // display winner
-    let result = checkWinner();
+    // let result = checkWinner();
     // if the result is not null i.e. has been assigned
 }
