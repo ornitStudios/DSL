@@ -5,22 +5,78 @@ new p5();
 // the board defined as a list of lists
 let board = [
     ['','','','','','','',],
-    ['','R','','Y','','','',],
-    ['Y','Y','R','R','R','','',],
-    ['R','Y','Y','R','Y','','',],
-    ['R','Y','R','R','Y','','',],
-    ['R','R','Y','Y','Y','R','',],
+    ['','','','','','','',],
+    ['','','','','','','',],
+    ['','','','','','','',],
+    ['','','','','','','',],
+    ['','','','','','','',],
 ];
 
-// the players
-let players = ['R','Y'];
+// height and width of each square to be defined in setup()
+// but needs to be global
+let w;
+let h;
 
-let currentPlayer;
+// the players
+// Human will be red
+let human = 'R';
+let ai = 'Y';
+
+// Human to start
+let currentPlayer = human;
+
 // array of available squares on the board
 let available = [];
 
 function setup(){
     createCanvas(400,400);
+
+       //  w and h are the width and height of a square
+        w = floor(width/7);
+       // console.log("TCL: draw -> w", w)
+        h = floor(height/6);
+       // console.log("TCL: draw -> h", h)
+}
+
+// click to play
+function mousePressed(){
+    if (currentPlayer == human){
+        // human to play
+
+        // detect which column the human clicked in.
+        // floor() calculates the closest int value that is less than or equal to 
+        // the value of the parameter.
+        let j = floor(mouseX/w);
+        
+        // detect which is the lowest available square in that column
+        // drop a red coin in that column
+        // i.e. assign 'R' to the position on the board and let 
+        // draw() draw a red ellipse in that position
+        for (let i = 5; i>=0; i--){
+            console.log("TCL: mousePressed -> i", i)
+            if (board[i][j] == ''){
+                console.log(i);
+                board[i][j] = human;
+                i=0;
+            }
+        }
+        // human has played switch to ai
+        currentPlayer = ai;
+
+        // ai plays randomly at this stage
+        j = floor(random(6));
+        
+        for (i = 5; i>=0; i--){
+            console.log("TCL: mousePressed -> i", i)
+            if (board[i][j] == ''){
+                console.log(i);
+                board[i][j] = ai;
+                i=0;
+            }
+        }
+        // ai has played switch back to human
+        currentPlayer = human;
+    } 
 }
 
 function nextTurn(){
@@ -48,10 +104,6 @@ function draw(){
     strokeWeight(4);
     fill('blue');
 
-    //  w and h are the width and height of a square
-    let w = width/7;
-    let h = height/6;
-    
 
     let posx = 0;
     let posy = 0;
