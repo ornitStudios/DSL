@@ -98,7 +98,6 @@ function checkWinner(wi,wj){
     // save the number of consecutive coins of the same colour (Rconnect)
     try {
         do { 
-            console.log(`checking ${board[wi][wj]} for horizontal connect`);
             Rconnect++;
             i++;
         }
@@ -121,7 +120,6 @@ function checkWinner(wi,wj){
         // 4 coins of the same colour have been connected horizontally.
         // we have a winner
         if (Rconnect+Lconnect-1 >= 4){
-            console.log(`${board[wi][wj]} wins`);
             // winner = board[wi][wj];
             // return winner
         }
@@ -133,40 +131,26 @@ function checkWinner(wi,wj){
     //  fourth row from the bottom
     try {
         if (wi <= 2){
-            console.log(`checking ${board[wi][wj]} for vertical connect`);
-            
             let Bconnect = 1;
             let j = 1;
             // check to the right of the coin just played
             // as long as coins are the same colour
             // save the number of consecutive coins of the same colour (Rconnect)
             do {
-                console.log("Bconnect entering the do loop ", Bconnect)
-                console.log("j entering the do loop ", j)
-                
                 if (board[wi][wj] == board[wi+j][wj]){
                     Bconnect++;
                     j++;
-                    console.log("Bconnect after match has been found ", Bconnect)
-                    console.log("j after match has been found and j has been incremented ", j)
                     if (Bconnect == 4){
-                        console.log("Bconnect if == 4 ", Bconnect)
-                        console.log("j if Bconnect == 4 ", j)
                         console.log(`${board[wi][wj]} wins`);
                         // winner = board[wi][wj];
                         // return winner
-                    };
-                    console.log(`AFTER SCORE HAS BEEN TESTED. j: ${j}, Bconnect score: ${Bconnect} for ${board[wi][wj]} `);
-                };            
+                    }
+                }         
             }
-            // CHECK THAT wi+j DOES NOT GET OFF THE BOARD OTHERWISE ERROR
-            // MAYBE GET THE WHOLEcheckWinner() IN A TRAY CATCH
-            while (board[wi][wj] == board[wi+j][wj] && [wi+j] < 6);
-            
-            console.log("Bconnect once checks are finished", Bconnect)
-        };
+            while (board[wi][wj] == board[wi+j][wj] && [wi+j] < 6);            
+        }
     } catch {console.log("ERROR: Checking out of range")}
-    
+
     // CHECK TOP RIGHT TO BOTTOM LEFT DIAGONAL
     // Combines vertical and horizontal checks 
     let LBconnect = 0;
@@ -181,13 +165,10 @@ function checkWinner(wi,wj){
     // save the number of consecutive coins of the same colour (LBconnect)
     try {
         do { 
-            console.log(`checking ${board[wi][wj]} at position ${wi}, ${wj} for bottom left diagonal connect `);
             LBconnect++;
-            console.log("TCL: checkWinner -> LBconnect", LBconnect)
             // the vertical index have to be substracted as top row is 0 and bottom row is 5
             k++;
             l--;
-            console.log(`next check at versus position ${wi+k}, ${wj+l}`)
         }
         while (board[wi][wj] == board[wi+k][wj+l]);
         
@@ -201,13 +182,10 @@ function checkWinner(wi,wj){
     // save the number of consecutive coins of the same colour (LBconnect)
     try {
         do { 
-            console.log(`checking ${board[wi][wj]} at position ${wi}, ${wj} for top right diagonal connect `);
             RTconnect++;
-            console.log("TCL: checkWinner -> RTconnect", RTconnect)
             // the vertical index have to be substracted as top row is 0 and bottom row is 5
             m--;
             n++;
-            console.log(`next check versus position ${wi+m}, ${wj+n}`)
         }
         while (board[wi][wj] == board[wi+m][wj+n]);
         
@@ -240,13 +218,10 @@ function checkWinner(wi,wj){
     // save the number of consecutive coins of the same colour (LBconnect)
     try {
         do { 
-            console.log(`checking ${board[wi][wj]} at position ${wi}, ${wj} for bottom right diagonal connect `);
             RBconnect++;
-            console.log("TCL: checkWinner -> RBconnect", RBconnect)
             // the vertical index have to be substracted as top row is 0 and bottom row is 5
             o++;
             p++;
-            console.log(`next check at versus position ${wi+o}, ${wj+p}`)
         }
         while (board[wi][wj] == board[wi+o][wj+p]);
         
@@ -260,13 +235,10 @@ function checkWinner(wi,wj){
     // save the number of consecutive coins of the same colour (LBconnect)
     try {
         do { 
-            console.log(`checking ${board[wi][wj]} at position ${wi}, ${wj} for top left diagonal connect `);
             LTconnect++;
-            console.log("TCL: checkWinner -> LTconnect", LTconnect)
             // the vertical index have to be substracted as top row is 0 and bottom row is 5
             q--;
             r--;
-            console.log(`next check versus position ${wi+q}, ${wj+r}`)
         }
         while (board[wi][wj] == board[wi+q][wj+r]);
         
@@ -284,28 +256,6 @@ function checkWinner(wi,wj){
     //     // winner = board[wi][wj];
     //     // return winner
     }
-
-    // check one to the left and one to the bottom of the coin just played
-    // as long as coins are the same colour
-    // save the number of consecutive coins of the same colour (Lconnect)
-    // do { 
-    //     LDconnect++;
-    //     i++;
-    // }
-    // while (board[wi][wj] == board[wi][wj-i]);
-    
-    // // once Right and left have been checked add the scores
-    // // substract 1 as the coin being played is effectively counted twice
-    // // If the score is equal or superior to 4
-    // // 4 coins of the same colour have been connected horizontally.
-    // // we have a winner
-    // if (Rconnect+Lconnect-1 >= 4){
-    //     console.log(`${board[wi][wj]} wins`);
-    //     // winner = board[wi][wj];
-    //     // return winner
-    // };
-
-
     // if there are no more available squares
     // It's a tie
     // console.log('just checking');
@@ -321,7 +271,7 @@ function draw(){
     let posx = 0;
     let posy = 0;
 
-    // additions and substractions offste the strokeWeight(4)
+    // additions and substractions offset the strokeWeight(4)
     rect(posx+2, posy+2, width-4, height-4);
 
     // draw 7 horizontal lines
