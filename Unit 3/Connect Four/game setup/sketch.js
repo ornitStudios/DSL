@@ -79,18 +79,30 @@ function mousePressed(){
 function bestMove(){
     let i;
     let j;
+    let bestScore = -Infinity;
+    let move; 
     for (j = 0; j < 7; j++){
         for (i = 5; i >= 0; i--){
+            // these are all possible positions for ai
             if (board[i][j] == ''){
-                // these are all possible positions for ai
+                // try the position
                 board[i][j] = ai;
-                console.log(`ai played ${i},${j}`);
-                coinsPlayed++;
+                console.log(`ai tested ${i},${j}`);
+                // call minimax() on the board as it is
+                // and return the score for that board 
+                let score = minimax(board);
+                // undo the move. At this stage, ai is testing only, not playing
+                board[i][j] = '';
+                if (score > bestScore){
+                    bestScore = score;
+                    move = {i,j};
+                }
                 i=0;
             }; 
         };
     };
-
+    board[move.i][move.j]=ai;
+    coinsPlayed++
     // ai has played switch back to human
     currentPlayer = human;
 }
@@ -279,6 +291,9 @@ function checkWinner(wi,wj){
     }
 }
 
+function minimax(board){
+    return 1;
+};
 
 function draw(){
     background(220);
