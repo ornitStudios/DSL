@@ -25,6 +25,12 @@ let ai = 'Y';
 // Human to start
 let currentPlayer = human;
 
+// There is a finite number of coins that can be played
+// counting them as they are played will help determine...
+// ... when to start checking for a winner (not implemented)
+// ... when the game finished in a tie ie coinsPLayed == 42 AND winner == null
+let coinsPlayed = 0;
+
 // array of available squares on the board
 let available = [];
 
@@ -34,6 +40,7 @@ function setup(){
        //  w and h are the width and height of a square
         w = floor(width/7);
         h = floor(height/6);
+
 };
 
 // click to play
@@ -53,10 +60,11 @@ function mousePressed(){
         for (let i = 5; i>=0; i--){
             if (board[i][j] == ''){
                 board[i][j] = human;
+                console.log(`Human played ${i},${j}`);
+                coinsPlayed++;
                 // once the human has played, check for a winner
                 let result = checkWinner(i,j);
                 console.log("TCL: mousePressed -> result", result)
-                
                 i=0;
                 
             };
@@ -70,6 +78,8 @@ function mousePressed(){
         for (i = 5; i>=0; i--){
             if (board[i][j] == ''){
                 board[i][j] = ai;
+                console.log(`ai played ${i},${j}`);
+                coinsPlayed++;
                  // once the ai has played, check for a yellow winner from the position just played
                 // pass the position to check winnner
                 let result = checkWinner(i,j);
@@ -260,9 +270,13 @@ function checkWinner(wi,wj){
         winner = board[wi][wj];
         return winner
     }
-    // if there are no more available squares
-    // It's a tie
-    // console.log('just checking');
+
+    // if all coins have been played and there is no winner
+    // we have a tie
+    if (coinsPlayed == 42 && winner !== null){
+        winner = 'tie';
+        return winner
+    }
 }
 
 
