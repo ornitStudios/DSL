@@ -54,8 +54,11 @@ function mousePressed(){
             if (board[i][j] == ''){
                 board[i][j] = human;
                 // once the human has played, check for a winner
-                checkWinner(i,j);
+                let result = checkWinner(i,j);
+                console.log("TCL: mousePressed -> result", result)
+                
                 i=0;
+                
             };
         };
         // human has played switch to ai
@@ -67,11 +70,11 @@ function mousePressed(){
         for (i = 5; i>=0; i--){
             if (board[i][j] == ''){
                 board[i][j] = ai;
-                checkWinner(i,j);
-                i=0;
-                // once the ai has played, check for a yellow winner from the position just played
+                 // once the ai has played, check for a yellow winner from the position just played
                 // pass the position to check winnner
-                
+                let result = checkWinner(i,j);
+                console.log("TCL: mousePressed -> result", result)
+                i=0;
             };
         };
         // ai has played switch back to human
@@ -87,7 +90,7 @@ function checkWinner(wi,wj){
     // Winner can only happen once at least 8 coins (10 for diagonal)/4 rounds have been played
     // MAYBE SET UP A COUNTER FOR ROUNDS AND PUT checkWinner in an If then conditional sutructure 
 
-    // let winner = null;
+    let winner = null;
 
     // CHECK HORIZONTAL
     let Rconnect = 0;
@@ -120,8 +123,9 @@ function checkWinner(wi,wj){
         // 4 coins of the same colour have been connected horizontally.
         // we have a winner
         if (Rconnect+Lconnect-1 >= 4){
-            // winner = board[wi][wj];
-            // return winner
+            // console.log(`${board[wi][wj]} wins`);
+            winner = board[wi][wj];
+            return winner
         }
     } catch {console.log('ERROR: checking out of range')}
     
@@ -141,9 +145,9 @@ function checkWinner(wi,wj){
                     Bconnect++;
                     j++;
                     if (Bconnect == 4){
-                        console.log(`${board[wi][wj]} wins`);
-                        // winner = board[wi][wj];
-                        // return winner
+                        // console.log(`${board[wi][wj]} wins`);
+                        winner = board[wi][wj];
+                        return winner
                     }
                 }         
             }
@@ -199,9 +203,9 @@ function checkWinner(wi,wj){
     // 4 coins of the same colour have been connected horizontally.
     // we have a winner
     if (LBconnect+RTconnect-1 >= 4){
-        console.log(`${board[wi][wj]} wins`);
-    //     // winner = board[wi][wj];
-    //     // return winner
+        // console.log(`${board[wi][wj]} wins`);
+        winner = board[wi][wj];
+        return winner
     }
 
     // CHECK TOP LEFT TO BOTTOM RIGHT DIAGONAL
@@ -252,9 +256,9 @@ function checkWinner(wi,wj){
     // 4 coins of the same colour have been connected horizontally.
     // we have a winner
     if (RBconnect+LTconnect-1 >= 4){
-        console.log(`${board[wi][wj]} wins`);
-    //     // winner = board[wi][wj];
-    //     // return winner
+        // console.log(`${board[wi][wj]} wins`);
+        winner = board[wi][wj];
+        return winner
     }
     // if there are no more available squares
     // It's a tie
