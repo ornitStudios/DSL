@@ -72,27 +72,27 @@ function mousePressed(){
         // human has played switch to ai
         currentPlayer = ai;
 
-        // ai plays randomly at this stage
-        j = floor(random(6));
-        
-        for (i = 5; i>=0; i--){
-            if (board[i][j] == ''){
-                board[i][j] = ai;
-                console.log(`ai played ${i},${j}`);
-                coinsPlayed++;
-                 // once the ai has played, check for a yellow winner from the position just played
-                // pass the position to check winnner
-                let result = checkWinner(i,j);
-                console.log("TCL: mousePressed -> result", result)
-                i=0;
-            };
-        };
-        // ai has played switch back to human
-        currentPlayer = human;
+        bestMove();
     }; 
 }
 
-function nextTurn(){
+function bestMove(){
+    let i;
+    let j;
+    for (j = 0; j < 7; j++){
+        for (i = 5; i >= 0; i--){
+            if (board[i][j] == ''){
+                // these are all possible positions for ai
+                board[i][j] = ai;
+                console.log(`ai played ${i},${j}`);
+                coinsPlayed++;
+                i=0;
+            }; 
+        };
+    };
+
+    // ai has played switch back to human
+    currentPlayer = human;
 }
 
 function checkWinner(wi,wj){
