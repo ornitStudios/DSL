@@ -64,7 +64,8 @@ function mousePressed(){
                 coinsPlayed++;
                 // once the human has played, check for a winner
                 let result = checkWinner(i,j);
-                console.log("TCL: mousePressed -> result", result)
+                console.log("Checking human resutlt -> result", result)
+                // ULTIMATELY HERE IF Result = R GAME OVER
                 i=0;
             };
         };
@@ -153,7 +154,7 @@ function checkWinner(wi,wj){
             winner = board[wi][wj];
             return winner
         }
-    } catch {console.log('ERROR: checking out of range')}
+    } catch {}
     
     // CHECK VERTICAL.
     // only need to check below the coin that has just been played
@@ -179,7 +180,7 @@ function checkWinner(wi,wj){
             }
             while (board[wi][wj] == board[wi+j][wj] && [wi+j] < 6);            
         }
-    } catch {console.log("ERROR: Checking out of range")}
+    } catch {}
 
     // CHECK TOP RIGHT TO BOTTOM LEFT DIAGONAL
     // Combines vertical and horizontal checks 
@@ -204,7 +205,7 @@ function checkWinner(wi,wj){
         
         k = 0;
         l = 0;
-    } catch {console.log('ERROR: checking out of range')};
+    } catch {};
 
 
     // check one to the right and one to the top of the coin just played
@@ -221,7 +222,7 @@ function checkWinner(wi,wj){
         
         m = 0;
         n = 0;
-    } catch {console.log('ERROR: checking out of range')};
+    } catch {};
 
     // Once bottom left and top right directions have been checked, 
     // substract 1 as the coin being played is effectively counted twice
@@ -257,7 +258,7 @@ function checkWinner(wi,wj){
         
         o = 0;
         p = 0;
-    } catch {console.log('ERROR: checking out of range')};
+    } catch {};
 
 
     // check one to the right and one to the top of the coin just played
@@ -274,7 +275,7 @@ function checkWinner(wi,wj){
         
         q = 0;
         r = 0;
-    } catch {console.log('ERROR: checking out of range')};
+    } catch {};
 
     // Once bottom left and top right directions have been checked, 
     // substract 1 as the coin being played is effectively counted twice
@@ -296,8 +297,9 @@ function checkWinner(wi,wj){
 }
 
 function minimax(board, i, j, depth, isMaximising){
+
     let result = checkWinner(i,j);
-    console.log("TCL: mousePressed -> result", result)
+    console.log("Checking ai resutlt -> result", result)
     return 1;
 };
 
