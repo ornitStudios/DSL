@@ -66,7 +66,6 @@ function mousePressed(){
                 let result = checkWinner(i,j);
                 console.log("TCL: mousePressed -> result", result)
                 i=0;
-                
             };
         };
         // human has played switch to ai
@@ -89,8 +88,13 @@ function bestMove(){
                 board[i][j] = ai;
                 console.log(`ai tested ${i},${j}`);
                 // call minimax() on the board as it is
-                // and return the score for that board 
-                let score = minimax(board);
+                // and return the score for that board
+                // board is the configuration of the board being tested
+                // i and j are the position of the coin that has just been played (necessary for checkwinner())
+                // 0 is the depth of the algorithm (how many times it has recursively called itself)
+                // false is the isMaximising boolean. is the next player the minimising or the maximising player?
+                // i.e. the player who wants the highest score or the player who wants the lowest score 
+                let score = minimax(board, i, j, 0, false);
                 // undo the move. At this stage, ai is testing only, not playing
                 board[i][j] = '';
                 if (score > bestScore){
@@ -291,7 +295,9 @@ function checkWinner(wi,wj){
     }
 }
 
-function minimax(board){
+function minimax(board, i, j, depth, isMaximising){
+    let result = checkWinner(i,j);
+    console.log("TCL: mousePressed -> result", result)
     return 1;
 };
 
