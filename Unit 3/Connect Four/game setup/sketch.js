@@ -47,6 +47,7 @@ function setup(){
 function mousePressed(){
     if (currentPlayer == human){
         // human to play
+        let result;
 
         // detect which column the human clicked in.
         // floor() calculates the closest int value that is less than or equal to 
@@ -63,18 +64,31 @@ function mousePressed(){
                 console.log(`Human played ${i},${j}`);
                 coinsPlayed++;
                 // once the human has played, check for a winner
-                let result = checkWinner(i,j);
+                result = checkWinner(i,j);
                 console.log("Checking human resutlt -> result", result)
                 // ULTIMATELY HERE IF Result = R GAME OVER
                 i=0;
             };
         };
-        // human has played switch to ai
-        currentPlayer = ai;
 
-        bestMove();
+        if (result != null ){
+            // stop the loop
+            noLoop();
+            let resultP = createP('');
+            resultP.style('font-size', '32px' );
+            if (result == 'tie'){
+                resultP.html('Tie!');
+            } else {
+                resultP.html(`${result} wins!`)
+            }
+            console.log(result);
+        } else{
+            // human has played and not won switch to ai
+            currentPlayer = ai;
+            bestMove();
+        };
     }; 
-}
+};
 
 function bestMove(){
     let i;
@@ -294,13 +308,22 @@ function checkWinner(wi,wj){
         winner = 'tie';
         return winner
     }
+
+    // if non of the above have been resulted in any winner, 
+    // just return winner as null
+    return winner;
 }
 
 function minimax(board, i, j, depth, isMaximising){
 
     let result = checkWinner(i,j);
     console.log("Checking ai resutlt -> result", result)
-    return 1;
+
+    if(isMaximising){
+        return 1;
+    } else {
+        return -1;
+    }
 };
 
 function draw(){
