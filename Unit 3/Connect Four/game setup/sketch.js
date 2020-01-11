@@ -93,33 +93,43 @@ function mousePressed(){
 function bestMove(){
     let i;
     let j;
+    // ai is the maximising player i.e. trying to get the highest score
+    // human is the minimising player i.e. trying to get the lowest score
+
+    // track the score of the best move for ai
+    // anything better than -infinity will become the best move fo ai
     let bestScore = -Infinity;
+
+    // track the best move itself i.e. the coordinates of the best move "move{i.j}"
     let move; 
+    // for each row (0 to 6)
     for (j = 0; j < 7; j++){
+        // for each column startin from the bottom (hello gravity!) (5 to 0)
         for (i = 5; i >= 0; i--){
-            // these are all possible positions for ai
+            // if the position = '' the position is a potential option
+            // so these are all possible positions for ai
             if (board[i][j] == ''){
                 // try the position
                 board[i][j] = ai;
-                console.log(`ai tested ${i},${j}`);
                 // call minimax() on the board as it is
                 // and return the score for that board
                 // board is the configuration of the board being tested
                 // i and j are the position of the coin that has just been played (necessary for checkwinner())
                 // 0 is the depth of the algorithm (how many times it has recursively called itself)
                 // false is the isMaximising boolean. is the next player the minimising or the maximising player?
-                // i.e. the player who wants the highest score or the player who wants the lowest score 
                 let score = minimax(board, i, j, 0, false);
                 // undo the move. At this stage, ai is testing only, not playing
                 board[i][j] = '';
+                // if the score is greater than the best score, the score becomes the new best score
+                // and the move becomes the new best move
                 if (score > bestScore){
                     bestScore = score;
                     move = {i,j};
                 }
                 i=0;
-            }; 
-        };
-    };
+            } 
+        }
+    }
     board[move.i][move.j]=ai;
     coinsPlayed++
     // ai has played switch back to human
@@ -314,17 +324,76 @@ function checkWinner(wi,wj){
     return winner;
 }
 
+
+let scores = {
+    R: -1,
+    Y: 1,
+    tie:0
+}
+
 function minimax(board, i, j, depth, isMaximising){
 
     let result = checkWinner(i,j);
-    console.log("Checking ai resutlt -> result", result)
-
-    if(isMaximising){
-        return 1;
+    console.log("Checking ai resutlt -> result", result);
+    // IF AI WINS WITH THE FIRST MOVE THEY TRY IT WILL BE CAUGHT HERE
+    // RETURN THE "WIN STATUS" SOMHOW AND DO NOT GO FURTHER
+    if (result !== null){
+        console.log("exiting minimax", result)
+        console.log("TCL: minimax -> scores[result]", scores[result])
+        return scores[result];
     } else {
-        return -1;
+        if(isMaximising){
+            // if the value that ws passed is true
+            // i.e. the move to be tested is ai's. ai is the maximising player
+            // calculate and return the score of that move to bestMove()
+            // bestMove() will assess if the score is higher than the best score and the move the best move 
+
+            // Any score will be greater than -Infinity  so a best score will happen
+            let bestScore = -Infinity;
+
+            for (j = 0; j < 7; j++){
+                // for each column startin from the bottom (hello gravity!) (5 to 0)
+                for (i = 5; i >= 0; i--){
+                    // if the position = '' the position is a potential option
+                    // so these are all possible positions for human to play after ai has played
+                    if (board[i][j] == ''){
+                        // try the position
+                        board[i][j] = ai;
+                        let score = minimax(board, i,j, depth++, false);
+                        board[i][j] = '';
+                        bestScore = max(score, bestScore);
+                    }
+                }
+            }
+            return bestScore;
+
+        } else {
+            // the value that was passed is false
+            // i.e. the move to be tested is the human's. human is the maximising player
+            // calculate and return the score of that move to bestMove()
+            // bestMove() will assess if the score higher than the best score and the move the best move 
+
+            // any score will be lower than Infinity so a best score will happen
+            let bestScore = Infinity;
+
+            for (j = 0; j < 7; j++){
+                // for each column startin from the bottom (hello gravity!) (5 to 0)
+                for (i = 5; i >= 0; i--){
+                    // if the position = '' the position is a potential option
+                    // so these are all possible positions for human to play after ai has played
+                    if (board[i][j] == ''){
+                        // try the position
+                        board[i][j] = human;
+                        let score = minimax(board, i,j, depth++, true);
+                        board[i][j] = '';
+                        bestScore = min(score, bestScore);
+                    }
+                }
+            }
+            return bestScore;
+        }
     }
-};
+}
 
 function draw(){
     background(220);
