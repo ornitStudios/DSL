@@ -47,6 +47,17 @@
                 personality.push(value);
             }
             console.log("TCL: personality", personality)
+
+            const count = {};
+            for (let i = 0; i < personality.length; i++) {
+                const num = personality[i];
+                // using the ternary operator
+                // Ternary operator starts with conditional expression followed by ? operator. 
+                // Second part ( after ? and before : operator) will be executed if condition turns out to be true. 
+                // If condition becomes false then third part (after :) will be executed.
+                count[num] = count[num] ? count[num] + 1 : 1; 
+            };
+            console.log("TCL: checkIt -> count", count)
         }
     </script>    
 </body>
