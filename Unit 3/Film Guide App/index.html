@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta id="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- CDN for the chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
 
     <title>Film Guide App</title>
 </head>
@@ -32,10 +35,15 @@
             <input type="checkbox" name="15" value="optimist">I am innovative and unique<br>
             <input type="checkbox" name="16" value="optimist">I am generous<br>
         </fieldset>
-        <input type="button" onclick="checkIt()" value="Submit">
+        <input type="button" onclick="chartIt()" value="Submit">
     </form>
 
+    <!-- canvas to host a chart -->
+    <br>
+    <canvas id="chart" width="800" height="400"></canvas>
+
     <script>
+
         function checkIt(){
             const personality = [];
             
@@ -46,7 +54,6 @@
                 // push each value to an array
                 personality.push(value);
             }
-            console.log("TCL: personality", personality)
 
             const count = {};
             for (let i = 0; i < personality.length; i++) {
@@ -56,9 +63,45 @@
                 // Second part ( after ? and before : operator) will be executed if condition turns out to be true. 
                 // If condition becomes false then third part (after :) will be executed.
                 count[num] = count[num] ? count[num] + 1 : 1; 
-            };
-            console.log("TCL: checkIt -> count", count)
+            }
+
+            const xLabels = [];
+            const yValues = [];
+            for (x in count) {
+                xLabels.push(x);
+                yValues.push(count[x]);
+            }
+            return {xLabels,yValues}
         }
+
+        async function chartIt(){
+            // retrieve the results of the questionaire
+            const results = await checkIt();
+            // console.log("TCL: chartIt -> results", results);
+
+            // context of the chart (see chart.js documentation)
+            const ctx = document.getElementById('chart').getContext('2d');
+
+            // prepare data
+            const data = {
+                labels: results.xLabels,
+                datasets: [{
+                    label: 'Your profile',
+                    data: results.yValues,
+                    backgroundColor: ['rgba(1, 99, 132, 0.2)','rgba(100, 99, 132, 0.2)','rgba(100, 1, 132, 0.2)'],
+                    borderColor: 'rgba(1, 1, 1, 1)',
+                    borderWidth: 1
+                }]
+            }
+
+            // draw chart
+            const myChart = new Chart(ctx, {
+                type: 'polarArea',
+                data: data,
+                // options: options
+            });
+        }
+
     </script>    
 </body>
 </html>
