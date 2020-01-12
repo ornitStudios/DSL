@@ -34,5 +34,20 @@
         </fieldset>
         <input type="button" onclick="checkIt()" value="Submit">
     </form>
+
+    <script>
+        function checkIt(){
+            const personality = [];
+            
+            // grab all the entries in the form
+            const formData = new FormData(document.getElementById('whoAreYou'));
+            // loop through the entries
+            for (const [key, value]  of formData.entries()) {
+                // push each value to an array
+                personality.push(value);
+            }
+            console.log("TCL: personality", personality)
+        }
+    </script>    
 </body>
 </html>
