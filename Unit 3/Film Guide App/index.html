@@ -101,12 +101,19 @@
             }
 
             // prepare options
+
             const options = {
                 onClick: (evt, item) => {
-                    item[0]._model.outerRadius += 10;
+
+                    // retrieve the personality trait corresponding to the clicked sector of the polar area
+                    this.personalityTrait = item[0]._model.label;
+                    console.log("TCL: chartIt -> personalityTrait", personalityTrait)
+
+                    // retrieve the genres corresponding to the personality trait corresponding to the clicked sector of the polar area
+                    this.genres = reviewRules[this.personalityTrait];
+                    console.log("TCL: chartIt -> genres", genres)
                 }
             }
-            
 
             // draw chart
             const myChart = new Chart(ctx, {
