@@ -94,14 +94,25 @@
                 }]
             }
 
+            // prepare options
+            const options = {
+                onClick: (evt, item) => {
+                    item[0]._model.outerRadius += 10;
+                }
+            }
+            
+
             // draw chart
             const myChart = new Chart(ctx, {
                 type: 'polarArea',
                 data: data,
-                // options: options
+                options: options
             });
         }
 
+        function alertBox(){
+            alert('Nice click Man!');
+        }
     </script>    
 </body>
 </html>
