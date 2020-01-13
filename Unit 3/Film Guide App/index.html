@@ -7,7 +7,6 @@
     <!-- CDN for the chart.js library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 
-
     <title>Film Guide App</title>
 </head>
 
@@ -37,10 +36,12 @@
         </fieldset>
         <input type="button" onclick="chartIt()" value="Submit">
     </form>
-
     <!-- canvas to host a chart -->
     <br>
     <canvas id="chart" width="800" height="400"></canvas>
+    <div>
+        <span id="yourReviews"></span>
+    </div>
 
     <script>
 
@@ -50,9 +51,12 @@
             "optimist":['comedy','animation', 'musical', 'romance', 'kids movies'],
         }
 
+        const NYTendpoint = 'https://api.nytimes.com/svc/movies/v2/reviews/search.json?query=';
+        const NYTkey = '&api-key=bcdFNGzDD9NVOPjwTOAYE6m0QYVsxjtd';
+
+
         function checkIt(){
             const personality = [];
-            
             // grab all the entries in the form
             const formData = new FormData(document.getElementById('whoAreYou'));
             // loop through the entries
@@ -60,7 +64,6 @@
                 // push each value to an array
                 personality.push(value);
             }
-
             const count = {};
             for (let i = 0; i < personality.length; i++) {
                 const num = personality[i];
@@ -69,16 +72,16 @@
                 // Second part ( after ? and before : operator) will be executed if condition turns out to be true. 
                 // If condition becomes false then third part (after :) will be executed.
                 count[num] = count[num] ? count[num] + 1 : 1; 
-            }
-
+            };
+            
             const xLabels = [];
             const yValues = [];
             for (x in count) {
                 xLabels.push(x);
                 yValues.push(count[x]);
-            }
+            };
             return {xLabels,yValues}
-        }
+        };
 
         async function chartIt(){
             // retrieve the results of the questionaire
@@ -99,33 +102,77 @@
                     borderWidth: 1
                 }]
             }
-
             // prepare options
-
             const options = {
                 onClick: (evt, item) => {
 
-                    // retrieve the personality trait corresponding to the clicked sector of the polar area
+                    // retrieve the personality trait corresponding to the clicked sector of the doughnut
+                    // const personalityTrait = item[0]._model.label;
                     this.personalityTrait = item[0]._model.label;
-                    console.log("TCL: chartIt -> personalityTrait", personalityTrait)
-
-                    // retrieve the genres corresponding to the personality trait corresponding to the clicked sector of the polar area
                     this.genres = reviewRules[this.personalityTrait];
-                    console.log("TCL: chartIt -> genres", genres)
-                }
-            }
 
+                    for (i=0; i < genres.length; i++){
+                        this.genre = genres[i];                        
+                        // console.log("TCL: chartIt -> this.genre", this.genre);
+                        getReviews();
+                    }
+                }
+            };   
             // draw chart
             const myChart = new Chart(ctx, {
                 type: 'polarArea',
                 data: data,
                 options: options
             });
-        }
 
-        function alertBox(){
-            alert('Nice click Man!');
-        }
+            async function getReviews(){
+                // genre needs to be set for the headers as this.genre will change through the loop
+                // and document.body.append only happens once the loop is finished
+                const reviewGenre = this.genre;
+                
+                // set the result of the async function to a variable 
+                let response = await fetch(`https://api.nytimes.com/svc/movies/v2/reviews/search.json?query=${this.genre}&api-key=YOUR_API_KEY_HERE`);
+                // parse the response 
+                const data = await response.json();
+                console.log("JSON parsed response", data);
+
+                // build DOM
+                const root = document.createElement('p');
+                const header = document.createElement('h1'); 
+
+                // instantiate h1 (header) element
+                header.textContent = `GENRE: ${reviewGenre}`;
+
+                // append h1 to DOM
+                root.append(header);
+
+                for (i in data.results) {
+                    // build sub sections of the DOM
+                    const display_title = document.createElement('div');
+                    const summary_short = document.createElement('div');
+                    const link = document.createElement('a');
+
+                    // instantiate DOM elements
+                    display_title.textContent = `Display title : ${data.results[i].display_title}`;
+                    summary_short.textContent = `Summary : ${data.results[i].summary_short}`;
+                    link.textContent = data.results[i].link.url;
+                    link.href = data.results[i].link.url;
+                    link.target = '_blank';
+
+                    try{
+                        const image = document.createElement('img');
+                        image.src = data.results[i].multimedia.src;
+                        root.append(image)
+                    } catch (error) { 
+                        console.log('Multimedia src cannot be read')
+                        }
+
+                    // append to document
+                    root.append(display_title, summary_short, link);
+                }
+                document.body.append(root);
+            };
+        };  
     </script>    
 </body>
 </html>
