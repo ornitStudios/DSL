@@ -11,40 +11,51 @@
 
     <title>Film Guide App</title>
 </head>
+
 <body>
-<div class="container p-3 my-3 border">
-        <h1>Tell me who you are, I'll tell you what to watch!</h1>
-        <h2>People prefer movies and atmospheres that reinforce their own personality traits, preferences and values</h2>
-        <h3>Who are you?</h3>
-        
-        <form id="whoAreYou" action="">
-            <legend>Select at least 5 options that best match who you are, in the list below</legend>
-            <fieldset>
-                <input type="checkbox" name="1" value="freethinker">I am open to new experiences<br>
-                <input type="checkbox" name="2" value="freethinker">I loves to shop locally<br>
-                <input type="checkbox" name="3" value="freethinker">I look after my Health and I am diet conscious<br>
-                <input type="checkbox" name="4" value="freethinker">I do not conform to opinions of others<br>
-                <input type="checkbox" name="5" value="freethinker">I am non-traditional<br>
-                <input type="checkbox" name="6" value="freethinker">I am Inquisitive<br>
-                <input type="checkbox" name="7" value="adrenaline_junkie">I love a sale<br>
-                <input type="checkbox" name="8" value="adrenaline_junkie">I am Easy-going<br>
-                <input type="checkbox" name="9" value="adrenaline_junkie">I tend tend to be very self-reliant<br>
-                <input type="checkbox" name="10" value="adrenaline_junkie">I am a high achiever<br>
-                <input type="checkbox" name="11" value="adrenaline_junkie">I value having fun<br>
-                <input type="checkbox" name="12" value="adrenaline_junkie">I am an adventure seeker<br>
-                <input type="checkbox" name="13" value="optimist">I am very outgoing and friendly<br>
-                <input type="checkbox" name="14" value="optimist">I am interested in fashion<br>
-                <input type="checkbox" name="15" value="optimist">I am innovative and unique<br>
-                <input type="checkbox" name="16" value="optimist">I am generous<br>
-            </fieldset>
-            <input type="button" onclick="chartIt()" value="Submit">
-        </form>
-        <!-- canvas to host a chart -->
-        <br>
-        <canvas id="chart" width="800" height="400"></canvas>
-        <div>
-            <span id="yourReviews"></span>
+<div class="container_fluid p-3 my-3 border">
+    <div" class="row">
+        <div class="col-sm-6" style="background-color:lavender;">
+            <h1>Tell me who you are, I'll tell you what to watch!</h1>
+            <h2>People prefer movies and atmospheres that reinforce their own personality traits, preferences and values</h2>
+            <h3>Who are you?</h3>
+            
+            <form id="whoAreYou" action="">
+                <legend>Select at least 5 options that best match who you are, in the list below</legend>
+                <fieldset>
+                    <input type="checkbox" name="1" value="freethinker">I am open to new experiences<br>
+                    <input type="checkbox" name="2" value="freethinker">I loves to shop locally<br>
+                    <input type="checkbox" name="3" value="freethinker">I look after my Health and I am diet conscious<br>
+                    <input type="checkbox" name="4" value="freethinker">I do not conform to opinions of others<br>
+                    <input type="checkbox" name="5" value="freethinker">I am non-traditional<br>
+                    <input type="checkbox" name="6" value="freethinker">I am Inquisitive<br>
+                    <input type="checkbox" name="7" value="adrenaline_junkie">I love a sale<br>
+                    <input type="checkbox" name="8" value="adrenaline_junkie">I am Easy-going<br>
+                    <input type="checkbox" name="9" value="adrenaline_junkie">I tend tend to be very self-reliant<br>
+                    <input type="checkbox" name="10" value="adrenaline_junkie">I am a high achiever<br>
+                    <input type="checkbox" name="11" value="adrenaline_junkie">I value having fun<br>
+                    <input type="checkbox" name="12" value="adrenaline_junkie">I am an adventure seeker<br>
+                    <input type="checkbox" name="13" value="optimist">I am very outgoing and friendly<br>
+                    <input type="checkbox" name="14" value="optimist">I am interested in fashion<br>
+                    <input type="checkbox" name="15" value="optimist">I am innovative and unique<br>
+                    <input type="checkbox" name="16" value="optimist">I am generous<br>
+                </fieldset>
+                <input type="button" onclick="chartIt()" value="Submit">
+            </form>
         </div>
+        
+        
+        <div class="col-sm-6" style="background-color:lavenderblush;">
+            <!-- canvas to host a chart -->
+            <canvas id="chart"></canvas>
+        </div>
+    </div">
+        
+<div class="row">
+            <div id="yourReviews" class="col-sm-12" style="background-color:lavender;">
+            </div>
+    
+</div>
     
         <script>
     
@@ -140,7 +151,9 @@
                     console.log("JSON parsed response", data);
     
                     // build DOM
-                    const root = document.createElement('p');
+                    // const root = document.createElement('p');
+                    const root = document.getElementById("yourReviews");
+
                     const header = document.createElement('h1'); 
     
                     // instantiate h1 (header) element
@@ -184,7 +197,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     
         <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </div>
 </body>
 </html>
