@@ -179,6 +179,19 @@
     </div">
         
     <div class="row">
+
+    <div class="toast" data-autohide="false">
+    <div class="toast-header">
+        <strong class="mr-auto text-primary">Film reviews</strong>
+        <small class="text-muted">Just now</small>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+    </div>
+    <div class="toast-body">
+        Film reviews will appear here once you have completed the personality test and chosen a dominant personality trait. <br>
+        Simply click on the sector corresponding to the trait you wish to prioritise, in the pole Area diagram.
+    </div>
+    </div>
+            
         <div id="yourReviews" class="col-sm-12" style="background-color:lavender;"></div>
     </div>
     
@@ -191,7 +204,7 @@
             }
     
             const NYTendpoint = 'https://api.nytimes.com/svc/movies/v2/reviews/search.json?query=';
-            const NYTkey = "&api-key=YOUR_API_KEY_HERE";
+            const NYTkey = "&api-key=YOUR_API_KEY";
 
             function checkIt(){
                 const personality = [];
@@ -321,6 +334,13 @@
         </script>
         <!-- jQuery library -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <script>
+              $(document).ready(function(){
+              $('.toast').toast('show');
+              });
+            </script>
+            
     
         <!-- Popper JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
