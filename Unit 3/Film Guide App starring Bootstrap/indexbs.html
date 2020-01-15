@@ -300,14 +300,19 @@
     
                     // append h1 to DOM
                     root.append(header);
+
+                    // creating columns for cards
+                    const col = document.createElement("div");
+                    col.className="card-columns";
+
     
                     for (i in data.results) {
 
                         // creating bootstrap cards
                         // create the div for the card and assign the bootstrap attributes
                         const card = document.createElement('div');
-                        card.className = "card";
-                        card.style="width:400px";
+                        card.className = "card bg-light";
+                        card.style="width:500px";
 
                         // Try to get an image
                         // create the image tag and assign the necessary attributes for the card
@@ -349,11 +354,12 @@
                         card_body.appendChild(summary_short);
                         card_body.appendChild(link);
                         card.appendChild(card_body);
-                        root.append(card);
+                        col.append(card);
 
                         const br = document.createElement("br");
-                        root.append(br);
+                        col.append(br);
                     }
+                    root.append(col);
                     document.body.append(root);
                 };
             };  
