@@ -48,6 +48,23 @@
         <h1 class="display-4">The Film Guide App</h1>      
         <h2>Tell me who you are, I'll tell you what to watch.</h2>
     </div>
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top ">
+        <a class="navbar-brand" href="#"><img src="./FilmAppLogo.png" style="height:50px" alt="The Film Guide App logo"></a>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+                <a class="nav-link" href="https://www.nytimes.com/section/movies" target="_blank">The NYT</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://www.palacecinemas.com.au/" target="_blank">Palace Cinemas</a>
+            </li>
+        </ul>
+        <form class="form-inline" action="/action_page.php">
+            <input id="NYTAPIKey" class="form-control mr-sm-2" type="text" placeholder="Your NYT API key">
+            <button class="btn btn-success" type="submit"  onclick="getAPI();">Enter</button>
+        </form>
+    </nav>
+
 <div class="container_fluid p-3 my-3 ">
     <div" class="row">
         <div class="col-sm-6" style="background-color:lavender;">
@@ -63,83 +80,83 @@
                 <fieldset>
                 
                     <div class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input" id="customCheck1" name="1" value="freethinker">
-                        <label class="custom-control-label" for="customCheck1">I am open to new experiences</label>
+                        <input type="checkbox" class="custom-control-input" id="1" name="1" value="freethinker">
+                        <label class="custom-control-label" for="1">I am open to new experiences</label>
                     </div>
 
                     <div class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input" id="customCheck2" name="2" value="freethinker">
-                        <label class="custom-control-label" for="customCheck2">I love to shop locally</label>
+                        <input type="checkbox" class="custom-control-input" id="2" name="2" value="freethinker">
+                        <label class="custom-control-label" for="2">I love to shop locally</label>
                     </div>
                     
                     <div class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input" id="customCheck3" name="3" value="freethinker">
-                        <label class="custom-control-label" for="customCheck3">I look after my Health and I am diet conscious</label>
+                        <input type="checkbox" class="custom-control-input" id="3" name="3" value="freethinker">
+                        <label class="custom-control-label" for="3">I look after my Health and I am diet conscious</label>
                     </div>
 
                     <div class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input" id="customCheck4" name="4" value="freethinker">
-                        <label class="custom-control-label" for="customCheck4">I do not conform to opinions of others</label>
+                        <input type="checkbox" class="custom-control-input" id="4" name="4" value="freethinker">
+                        <label class="custom-control-label" for="4">I do not conform to opinions of others</label>
                     </div>
 
                     <div class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input" id="customCheck5" name="5" value="freethinker">
-                        <label class="custom-control-label" for="customCheck5">I am non-traditional</label>
+                        <input type="checkbox" class="custom-control-input" id="5" name="5" value="freethinker">
+                        <label class="custom-control-label" for="5">I am non-traditional</label>
                     </div>
 
                     <div class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input" id="customCheck6" name="6" value="freethinker">
-                        <label class="custom-control-label" for="customCheck6">I am inquisitive</label>
+                        <input type="checkbox" class="custom-control-input" id="6" name="6" value="freethinker">
+                        <label class="custom-control-label" for="6">I am inquisitive</label>
                     </div>
 
                     <div class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input" id="customCheck7" name="7" value="adrenaline_junkie">
-                        <label class="custom-control-label" for="customCheck7">I lovea sale</label>
+                        <input type="checkbox" class="custom-control-input" id="7" name="7" value="adrenaline_junkie">
+                        <label class="custom-control-label" for="7">I lovea sale</label>
                     </div>
 
                     <div class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input" id="customCheck8" name="8" value="adrenaline_junkie">
-                        <label class="custom-control-label" for="customCheck8">I am easy going</label>
+                        <input type="checkbox" class="custom-control-input" id="8" name="8" value="adrenaline_junkie">
+                        <label class="custom-control-label" for="8">I am easy going</label>
                     </div>
 
                     <div class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input" id="customCheck9" name="9" value="adrenaline_junkie">
-                        <label class="custom-control-label" for="customCheck9">I tend to be very self-reliant</label>
+                        <input type="checkbox" class="custom-control-input" id="9" name="9" value="adrenaline_junkie">
+                        <label class="custom-control-label" for="9">I tend to be very self-reliant</label>
                     </div>
 
                     <div class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input" id="customCheck10" name="10" value="adrenaline_junkie">
-                        <label class="custom-control-label" for="customCheck10">I am a high achiever</label>
+                        <input type="checkbox" class="custom-control-input" id="10" name="10" value="adrenaline_junkie">
+                        <label class="custom-control-label" for="10">I am a high achiever</label>
                     </div>
 
                     <div class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input" id="customCheck11" name="11" value="adrenaline_junkie">
-                        <label class="custom-control-label" for="customCheck11">I value having fun</label>
+                        <input type="checkbox" class="custom-control-input" id="11" name="11" value="adrenaline_junkie">
+                        <label class="custom-control-label" for="11">I value having fun</label>
                     </div>
 
                     <div class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input" id="customCheck12" name="12" value="adrenaline_junkie">
-                        <label class="custom-control-label" for="customCheck12">I am an adventure seeker</label>
+                        <input type="checkbox" class="custom-control-input" id="12" name="12" value="adrenaline_junkie">
+                        <label class="custom-control-label" for="12">I am an adventure seeker</label>
                     </div>
 
                     <div class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input" id="customCheck13" name="13" value="optimist">
-                        <label class="custom-control-label" for="customCheck13">I am very outgoing and friendly</label>
+                        <input type="checkbox" class="custom-control-input" id="13" name="13" value="optimist">
+                        <label class="custom-control-label" for="13">I am very outgoing and friendly</label>
                     </div>
 
                     <div class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input" id="customCheck14" name="14" value="optimist">
-                        <label class="custom-control-label" for="customCheck14">I am interested in fashion</label>
+                        <input type="checkbox" class="custom-control-input" id="14" name="14" value="optimist">
+                        <label class="custom-control-label" for="14">I am interested in fashion</label>
                     </div>
 
                     <div class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input" id="customCheck15" name="15" value="optimist">
-                        <label class="custom-control-label" for="customCheck15">I am innovative and unique</label>
+                        <input type="checkbox" class="custom-control-input" id="15" name="15" value="optimist">
+                        <label class="custom-control-label" for="15">I am innovative and unique</label>
                     </div>
 
                     <div class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input" id="customCheck16" name="16" value="optimist">
-                        <label class="custom-control-label" for="customCheck16">I am generous</label>
+                        <input type="checkbox" class="custom-control-input" id="16" name="16" value="optimist">
+                        <label class="custom-control-label" for="14">I am generous</label>
                     </div>
 
                 </fieldset>
