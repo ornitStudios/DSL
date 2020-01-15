@@ -59,9 +59,10 @@
                 <a class="nav-link" href="https://www.palacecinemas.com.au/" target="_blank">Palace Cinemas</a>
             </li>
         </ul>
-        <form class="form-inline" action="/action_page.php">
-            <input id="NYTAPIKey" class="form-control mr-sm-2" type="text" placeholder="Your NYT API key">
-            <button class="btn btn-success" type="submit"  onclick="getAPI();">Enter</button>
+        <!-- The following is not implemented -->
+        <form class="form-inline">
+            <input id="NYTAPIKey" class="form-control mr-sm-2" type="text" placeholder="Search reviews">
+            <button class="btn btn-success" id="enterKey" type="submit"  onclick="someSearch()">Search</button>
         </form>
     </nav>
 
@@ -177,11 +178,9 @@
         </div>
     </div">
         
-<div class="row">
-            <div id="yourReviews" class="col-sm-12" style="background-color:lavender;">
-            </div>
-    
-</div>
+    <div class="row">
+        <div id="yourReviews" class="col-sm-12" style="background-color:lavender;"></div>
+    </div>
     
         <script>
     
@@ -192,9 +191,8 @@
             }
     
             const NYTendpoint = 'https://api.nytimes.com/svc/movies/v2/reviews/search.json?query=';
-            const NYTkey = '&api-key=bcdFNGzDD9NVOPjwTOAYE6m0QYVsxjtd';
-    
-    
+            const NYTkey = "&api-key=YOUR_API_KEY_HERE";
+
             function checkIt(){
                 const personality = [];
                 // grab all the entries in the form
@@ -266,12 +264,14 @@
                 });
     
                 async function getReviews(){
+
+                    console.log("loading reviews using ",NYTkey);
                     // genre needs to be set for the headers as this.genre will change through the loop
                     // and document.body.append only happens once the loop is finished
                     const reviewGenre = this.genre;
                     
                     // set the result of the async function to a variable 
-                    let response = await fetch(`https://api.nytimes.com/svc/movies/v2/reviews/search.json?query=${this.genre}&api-key=bcdFNGzDD9NVOPjwTOAYE6m0QYVsxjtd`);
+                    let response = await fetch(`https://api.nytimes.com/svc/movies/v2/reviews/search.json?query=${this.genre}${NYTkey}`);
                     // parse the response 
                     const data = await response.json();
                     console.log("JSON parsed response", data);
