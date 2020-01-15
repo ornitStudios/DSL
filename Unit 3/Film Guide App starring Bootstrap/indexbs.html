@@ -304,33 +304,55 @@
                     for (i in data.results) {
 
                         // creating bootstrap cards
+                        // create the div for the card and assign the bootstrap attributes
+                        const card = document.createElement('div');
+                        card.className = "card";
+                        card.style="width:400px";
 
+                        // Try to get an image
+                        // create the image tag and assign the necessary attributes for the card
+                        const image = document.createElement('img');
+                        image.className = "card-img-top";
+                        image.style = "width:100%";
+                        try{
+                            // retrieve the image and assign it to the src of the img
+                            image.src = data.results[i].multimedia.src;
+                            // append the image to the card
+                            card.appendChild(image);
+                        } catch (error) { 
+                            // if there is an error, the image will never be appended to the card
+                            console.log('Multimedia src cannot be read')
+                        }
 
-                        // build sub sections of the DOM
-                        const display_title = document.createElement('div');
-                        const summary_short = document.createElement('div');
+                        // Build the body of the card
+                        const card_body = document.createElement('div');
+                        card_body.className = "card-body";
+                        // use an h4 for the title and assign the correct attribute
+                        const display_title = document.createElement('h4');
+                        display_title.className="card-title";
+                        const summary_short = document.createElement('p');
+                        // Create a p for the content of the card and assign the correct attribute
+                        summary_short.className="card-text";
+                        // create a button
                         const link = document.createElement('a');
-                        const para = document.createElement('p');
+                        link.className="btn btn-primary";
     
                         // instantiate DOM elements
                         display_title.textContent = `Display title : ${data.results[i].display_title}`;
                         summary_short.textContent = `Summary : ${data.results[i].summary_short}`;
-                        link.textContent = data.results[i].link.url;
+                        link.textContent = "Review link";
                         link.href = data.results[i].link.url;
                         link.target = '_blank';
-
-                        // Try to get an image
-                        const image = document.createElement('img');
-                        image.className = "img-thumbnail";
-                        try{
-                            image.src = data.results[i].multimedia.src;
-                            root.append(image);
-                        } catch (error) { 
-                            console.log('Multimedia src cannot be read')
-                            }
     
-                        // append to document
-                        root.append(display_title,summary_short,link,para);
+                        // append to the card body
+                        card_body.appendChild(display_title);
+                        card_body.appendChild(summary_short);
+                        card_body.appendChild(link);
+                        card.appendChild(card_body);
+                        root.append(card);
+
+                        const br = document.createElement("br");
+                        root.append(br);
                     }
                     document.body.append(root);
                 };
@@ -343,7 +365,7 @@
               $(document).ready(function(){
               $('.toast').toast('show');
               });
-            </script>
+        </script>
             
     
         <!-- Popper JS -->
