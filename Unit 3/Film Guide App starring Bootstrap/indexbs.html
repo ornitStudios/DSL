@@ -192,24 +192,14 @@
     </div>
     </div>
         <div id="yourReviews" class="col-sm-12" style="background-color:rgb(251,210,56);">
-            <nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
+            <nav id="reviewsMenu" class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
                 <a class="navbar-brand" href="#">Your film reviews</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>    
-                    </ul>
-                </div>  
+                <ul id="filmMenu" class="navbar-nav">
+                <!-- Menu items are created in a loop in getReview() -->
+                </ul>
             </nav>
         </div>
     </div>
@@ -308,16 +298,44 @@
                     const data = await response.json();
                     console.log("JSON parsed response", data);
     
-                    // build DOM
+                    // build DOM elements
                     // const root = document.createElement('p');
+
+                    // MENU HAS TO BE CREATED HERE
+                    // MAYBE THE ROOT HAS TO BE BROUGHT UP OR YOURREVIEW HAS TO BE THE ID OF THE TOP DIV
+                    // AND A NEW/DIFFERENT ID HAS TO BE CREATED FOR CONTENT 
+
+                    //     create the line item as <li class="nav-item">
+                    const li = document.createElement("li");
+                    li.className="nav-item";
+                    // create the link for the menu item as <a class="nav-link" href="#">Link</a>
+                    // WE LL DEAL WITH THE HREF LATER
+                    const menuItem = document.createElement("a");
+                    menuItem.className="nav-link";
+                    menuItem.href = `#${reviewGenre}`;
+                    menuItem.textContent = reviewGenre;
+
+                    // appendChild the link to the line
+                    li.appendChild(menuItem);
+
+                    // appendChild the line item (inc. appended link) to the <ul id="filmMenu">
+                    const ul = document.getElementById("filmMenu");
+                    ul.appendChild(li);
+
                     const root = document.getElementById("yourReviews");
 
-                    const header = document.createElement('h2'); 
-    
-                    // instantiate h1 (header) element
+                    // reference the <nav> for the menu
+                    // const reviewsMenu = document.getElementById("reviewsMenu");
+                    // CREATE MENU ITEMS HERE THEN childAPPEND THEM TO reviewsMenu 
+
+                    const header = document.createElement('h2');
+                    // create an id for the h2 that will be the anchor the menu points to
+                    header.id = reviewGenre;
+
+                    // instantiate h2 (header) element
                     header.textContent = `GENRE: ${reviewGenre}`;
     
-                    // append h1 to DOM
+                    // append h2 to DOM
                     root.append(header);
 
                     // creating columns for cards
@@ -375,6 +393,7 @@
                         card.appendChild(card_body);
                         col.append(card);
 
+                        // add a break between each card
                         const br = document.createElement("br");
                         col.append(br);
                     }
