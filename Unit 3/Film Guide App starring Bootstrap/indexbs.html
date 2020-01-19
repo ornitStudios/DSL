@@ -192,14 +192,18 @@
     </div>
     </div>
         <div id="yourReviews" class="col-sm-12" style="background-color:rgb(251,210,56);">
+
+            <!-- MUST MAKE THIS COLLAPSIBLE -->
             <nav id="reviewsMenu" class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
                 <a class="navbar-brand" href="#">Your film reviews</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <ul id="filmMenu" class="navbar-nav">
-                <!-- Menu items are created in a loop in getReview() -->
-                </ul>
+                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    <ul id="filmMenu" class="navbar-nav">
+                    <!-- Menu items are created in a loop in getReview() -->
+                    </ul>
+                </div>
             </nav>
         </div>
     </div>
@@ -209,7 +213,7 @@
             const reviewRules = {
                 "freethinker":['documentary','foreign films','cult classic', 'drama'],
                 "adrenaline_junkie":['science fiction','western', 'horror', 'action', 'war'],
-                "optimist":['comedy','animation', 'musical', 'romance', 'kids movies'],
+                "optimist":['comedy','animation', 'musical', 'romance', 'cartoon'],
             }
     
             const NYTendpoint = 'https://api.nytimes.com/svc/movies/v2/reviews/search.json?query=';
