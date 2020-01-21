@@ -193,7 +193,7 @@
     </div>
         <div id="yourReviews" class="col-sm-12" style="background-color:rgb(251,210,56);">
 
-            <!-- MUST MAKE THIS COLLAPSIBLE -->
+            <!-- Collapsible menu -->
             <nav id="reviewsMenu" class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
                 <a class="navbar-brand" href="#">Your film reviews</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -305,15 +305,10 @@
                     // build DOM elements
                     // const root = document.createElement('p');
 
-                    // MENU HAS TO BE CREATED HERE
-                    // MAYBE THE ROOT HAS TO BE BROUGHT UP OR YOURREVIEW HAS TO BE THE ID OF THE TOP DIV
-                    // AND A NEW/DIFFERENT ID HAS TO BE CREATED FOR CONTENT 
-
                     //     create the line item as <li class="nav-item">
                     const li = document.createElement("li");
                     li.className="nav-item";
                     // create the link for the menu item as <a class="nav-link" href="#">Link</a>
-                    // WE LL DEAL WITH THE HREF LATER
                     const menuItem = document.createElement("a");
                     menuItem.className="nav-link";
                     menuItem.href = `#${reviewGenre}`;
